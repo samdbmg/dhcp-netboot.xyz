@@ -1,0 +1,29 @@
+---
+name: Publish to Docker Hub
+on:
+  push:
+    branches:
+      - master
+  # Publish master every Thursday at 7AM (schedule only applies to the master branch)
+  schedule:
+    - cron: "0 7 * * 4"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Get datetime for tag
+        uses: srfrnk/current-time@master
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHHmmSS
+
+      - name: Build and push image
+        uses: docker/build-push-action@v1
+        with:
+          username: samdbmg
+          password: ${{ secrets.DOCKER_TOKEN }}
+          repository: samdbmg/dhcp-netboot.xyz
+          tags: latest, ${{ steps.current-time.outputs.formattedTime }}
