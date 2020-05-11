@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+dnsmasq --no-daemon --dhcp-range=${DHCP_RANGE_START},proxy ${DNSMASQ_ARGS}
