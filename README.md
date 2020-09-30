@@ -21,7 +21,7 @@ just fine.
 ## How do I run it?
 Run something like:
 ```bash
-docker run --net=host -e DHCP_RANGE_START=192.168.0.1 samdbmg/dhcp-netboot.xyz
+docker run --net=host --cap-add=NET_ADMIN -e DHCP_RANGE_START=192.168.0.1 samdbmg/dhcp-netboot.xyz
 ```
 Make sure you adjust the IP address in `DHCP_RANGE_START` to the first address
 on your network. dnsmasq will automatically figure out the right subnet mask to
