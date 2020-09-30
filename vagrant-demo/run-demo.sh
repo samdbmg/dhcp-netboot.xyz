@@ -3,7 +3,7 @@
 DHCP_RANGE_START=${1:-192.168.0.1}
 
 # Start the netboot container and run it in the background
-docker run --net=host -e DHCP_RANGE_START=${DHCP_RANGE_START} samdbmg/dhcp-netboot.xyz &
+docker run --net=host --cap-add=NET_ADMIN -e DHCP_RANGE_START=${DHCP_RANGE_START} samdbmg/dhcp-netboot.xyz &
 DOCKER_PROCESS=$!
 
 # Catch ctrl-c and clean up
