@@ -36,6 +36,18 @@ downloaded from the Internet as needed.
 To play DHCP server, the container needs listen to broadcasts on the target
 network, which doesn't seem to work with port forwarding.
 
+### Firewall
+Don't forget, if you've got a firewall running on your system you'll need to
+allow UDP traffic to ports 67 (DHCP), 69 (TFTP) and 4011 (PXE), along with
+TCP port 80 (HTTP) for the built in webserver. For `ufw`, try:
+```bash
+sudo ufw allow proto udp from any to any port 67
+sudo ufw allow proto udp from any to any port 69
+sudo ufw allow proto udp from any to any port 4011
+sudo ufw allow proto tcp from any to any port 80
+```
+Don't forget to remove the rules when you're done!
+
 ## Demo
 The [vagrant-demo/](vagrant-demo/) directory contains a demo of this container
 using a Virtualbox VM managed by Vagrant, bridged onto your host network. To
