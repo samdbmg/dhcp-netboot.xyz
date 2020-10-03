@@ -1,1 +1,4 @@
-vagrant-demo/
+Vagrantfile
+.vagrant
+README.md
+LICENCE.txt
