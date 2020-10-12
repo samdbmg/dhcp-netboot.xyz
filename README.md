@@ -59,8 +59,9 @@ cd vagrant-demo
 You might be prompted to select which network the VM should connect to, choose
 the one matching the IP address you gave.
 
-You should see something like:
-TODO: Screencast
+You should see something like (also at slightly better quality
+[on YouTube](https://www.youtube.com/watch?v=P-uuXoFdF54)):
+![Screen recrding of running demo](docs/screencast.gif)
 
 *Note that the Virtualbox Extension Pack might be needed for PXE boot to work,
 and it's configured with 3GB RAM so that live disks ISOs can be downloaded.*
