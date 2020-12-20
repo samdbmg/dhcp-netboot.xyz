@@ -51,4 +51,7 @@ Vagrant.configure("2") do |config|
     config.proxy.https    = ENV["https_proxy"]
     config.proxy.no_proxy = ENV["no_proxy"]
   end
+
+  # Turn off shared folders, we don't need them!
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 end
