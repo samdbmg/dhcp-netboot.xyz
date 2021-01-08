@@ -73,13 +73,11 @@ sudo ufw allow proto tcp from any to any port 80
 Don't forget to remove the rules when you're done!
 
 ## Demo
-The [vagrant-demo/](vagrant-demo/) directory contains a demo of this container
-using a Virtualbox VM managed by Vagrant, bridged onto your host network. To
-run it:
-```bash
-cd vagrant-demo
-./run-demo.sh 192.168.0.1
-```
+There's a [Vagrantfile](Vagrantfile) in this directory that demonstrates starting
+up a Virtualbox VM managed by Vagrant, bridged onto your host network and configured
+to PXE boot. To try it, run `./run-demo.sh 192.168.0.1` which will launch the Docker
+container and bring up a Vagrant box.
+
 **Note:** You might be prompted to select which network the VM should connect to, choose
 the one matching the IP address you gave.
 
