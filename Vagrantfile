@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
   # Define a Vagrant machine which should PXE boot off the docker cotnainer
   config.vm.define :demo, primary: true do |demo|
-    demo.vm.box = "clink15/pxe"
+    demo.vm.box = "bento/ubuntu-20.04"
 
     # Bridge the VM onto your host's network
     demo.vm.network "public_network"

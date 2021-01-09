@@ -93,11 +93,6 @@ Run `DHCP_RANGE_START=192.168.0.1 vagrant up netboot demo`.
 
 You'll probably be prompted twice for the network to attach to.
 
-### Running the demo on Windows with Virtualbox
-Unfortunately the PXE boot box used for the demo is only built for Virtualbox,
-if you're using Hyper-V you'll have to create yourself a VM and configure it
-to boot from the network (disable Secure Boot too, probably).
-
 ## Building Locally
 Should be as simple as `docker build .`
 
