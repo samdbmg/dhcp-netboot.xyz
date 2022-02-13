@@ -53,5 +53,5 @@ Vagrant.configure("2") do |config|
   end
 
   # Turn off shared folders, we don't need them!
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  # config.vm.synced_folder '.', '/vagrant', disabled: true
 end
