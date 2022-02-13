@@ -3,6 +3,9 @@ FROM linuxserver/netbootxyz:latest
 # Install dnsmasq to play DHCP server
 RUN apk add --update dnsmasq
 
+# Delete the TFTP config from the underlying image: dnsmasq does that here
+RUN rm -rf /etc/services.d/tftp
+
 # Copy config files for dnsmasq, and running as a service
 COPY etc /etc/
 
