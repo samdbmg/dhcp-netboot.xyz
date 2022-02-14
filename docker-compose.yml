@@ -1,0 +1,24 @@
+---
+version: "2.1"
+services:
+  netbootxyz:
+    container_name: netbootxyz
+    build:
+      context: .
+    environment:
+      - DHCP_RANGE_START=192.168.0.1
+    networks:
+      netbootxyz_network:
+        ipv4_address: 192.168.0.250
+    cap_add:
+      - NET_ADMIN
+networks:
+  netbootxyz_network:
+    driver: ipvlan
+    driver_opts:
+      parent: wlp2s0
+    ipam:
+      config:
+        - subnet: 192.168.0.1/24
+          gateway: 192.168.0.254
+          ip_range: 192.168.0.250/32
