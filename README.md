@@ -28,11 +28,6 @@ Make sure you adjust the IP address in `DHCP_RANGE_START` to the first address
 on your network. dnsmasq will automatically figure out the right subnet mask to
 use based on your local network setup.
 
-Then boot another device on the same network and ask it to boot from "LAN" or
-"PXE" or whatever your device happens to call it. You should be presented with
-a nice menu of live disks, installers and utilities to run, which will be
-downloaded from the Internet as needed.
-
 For this to work, it needs to have fairly low-level access to the target network
 (rather than the Docker internal bridge), which is why you need `--net=host`.
 It will need to open several ports on your system in order to act as a DHCP
@@ -95,6 +90,18 @@ netboot containers logs.
 
 For this to work on Windows using Hyper-V as a backend, you'll need to use an
 Administrator command prompt.
+
+## Booting a Device
+Either way, once you've got your container up and running on your network,
+boot another device on the same network and ask it to boot from "LAN" or
+"PXE" or "Network Boot" or whatever that device happens to call it.
+
+You should be presented with a nice menu of live disks, installers and
+utilities to run, which will be downloaded from the Internet as needed.
+
+**Note**: When using EFI systems, you might be prompted to push `p` to
+boot from a DHCP Proxy (see https://github.com/netbootxyz/netboot.xyz/pull/953
+for more on that).
 
 ## Demo
 There's a [Vagrantfile](Vagrantfile) in this directory that demonstrates starting
