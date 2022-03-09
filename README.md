@@ -19,6 +19,7 @@ need to permanently run a DHCP and TFTP server - most of the time my router is
 just fine.
 
 ## How do I run it on Linux?
+### Option 1: Running it directly
 On Linux you can run something like:
 ```bash
 docker run --net=host --cap-add=NET_ADMIN -e DHCP_RANGE_START=192.168.0.1 samdbmg/dhcp-netboot.xyz
@@ -32,9 +33,44 @@ Then boot another device on the same network and ask it to boot from "LAN" or
 a nice menu of live disks, installers and utilities to run, which will be
 downloaded from the Internet as needed.
 
-### Why do I need `--net=host`?
-To play DHCP server, the container needs to have an interface on the target
-network, rather than the Docker internal bridge.
+For this to work, it needs to have fairly low-level access to the target network
+(rather than the Docker internal bridge), which is why you need `--net=host`.
+It will need to open several ports on your system in order to act as a DHCP
+server, and also a web server to serve up the various menus. If that's not
+practical (e.g. because you're already using those ports), try Option 2.
+
+Don't forget, if you've got a firewall running on your system you'll need to
+allow UDP traffic to ports 67 (DHCP), 69 (TFTP) and 4011 (PXE), along with
+TCP port 80 (HTTP) for the built in webserver. For `ufw`, try:
+```bash
+sudo ufw allow proto udp from any to any port 67
+sudo ufw allow proto udp from any to any port 69
+sudo ufw allow proto udp from any to any port 4011
+sudo ufw allow proto tcp from any to any port 80
+```
+Don't forget to remove the rules when you're done!
+
+### Option 2: Docker Compose
+Docker Compose has support for the [ipvlan networking driver](https://docs.docker.com/network/ipvlan/)
+which creates virtual interfaces with their own IP address, and might be
+easier in some situations. This repository includes a [`docker-compose.yml`](./docker-compose.yml)
+file to run it that way.
+
+You will need to identify a suitable IP address on your network to use for the
+container, along with the interface and IP ranges to use.
+
+Run something along the lines of this, substituting the addresses for the ones
+on your network as needed:
+```
+export INTERFACE=`ip route | awk '/default/ { print $5 }'`
+export GATEWAY=`ip route | awk '/default/ { print $3 }'`
+export SUBNET=192.168.0.1
+export CONTAINER_IP=192.168.0.250
+docker-compose up
+```
+
+Make sure you do `docker-compose down` when you're finished to tidy up
+afterwards.
 
 ## What about Mac/Windows?
 On Mac and Windows Docker is usually a VM running in the background, and the
@@ -59,18 +95,6 @@ netboot containers logs.
 
 For this to work on Windows using Hyper-V as a backend, you'll need to use an
 Administrator command prompt.
-
-## Firewall
-Don't forget, if you've got a firewall running on your system you'll need to
-allow UDP traffic to ports 67 (DHCP), 69 (TFTP) and 4011 (PXE), along with
-TCP port 80 (HTTP) for the built in webserver. For `ufw`, try:
-```bash
-sudo ufw allow proto udp from any to any port 67
-sudo ufw allow proto udp from any to any port 69
-sudo ufw allow proto udp from any to any port 4011
-sudo ufw allow proto tcp from any to any port 80
-```
-Don't forget to remove the rules when you're done!
 
 ## Demo
 There's a [Vagrantfile](Vagrantfile) in this directory that demonstrates starting
