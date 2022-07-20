@@ -12,6 +12,8 @@ services:
         ipv4_address: ${CONTAINER_IP:-192.168.0.250}
     cap_add:
       - NET_ADMIN
+    volumes:
+      - /config
 networks:
   netbootxyz_network:
     driver: ipvlan
