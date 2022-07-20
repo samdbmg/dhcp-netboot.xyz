@@ -1,3 +1,12 @@
 #!/usr/bin/with-contenv bash
 
-dnsmasq --no-daemon --dhcp-range=${DHCP_RANGE_START},proxy ${DNSMASQ_ARGS}
+if [ -z ${CONTAINER_IP} ]; then
+    # If an IP wasn't given, assume the default route is the one to go for and get IP from that
+    CONTAINER_IP=$(ip route get to 1.1.1.1 | awk '/1.1.1.1/ { print $7}')
+fi
+
+# Start dnsmasq
+dnsmasq --no-daemon --dhcp-range=${DHCP_RANGE_START},proxy \
+    --dhcp-boot=tag:ipxe-bios,netboot.xyz.kpxe,,${CONTAINER_IP} \
+    --dhcp-boot=tag:ipxe-efi,netboot.xyz.efi,,${CONTAINER_IP} \
+    ${DNSMASQ_ARGS}
