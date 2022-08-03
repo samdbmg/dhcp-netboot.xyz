@@ -29,7 +29,7 @@ jobs:
           tags: latest, ${{ steps.current-time.outputs.formattedTime }}
 
       - name: Update Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2.1.0
+        uses: peter-evans/dockerhub-description@v3
         env:
           DOCKERHUB_USERNAME: samdbmg
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
