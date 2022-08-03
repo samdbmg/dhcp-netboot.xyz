@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
   # Publish master every Thursday at 7AM (schedule only applies to the master branch)
   schedule:
     - cron: "0 7 * * 4"
