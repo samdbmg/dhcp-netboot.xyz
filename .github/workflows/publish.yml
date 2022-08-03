@@ -3,7 +3,7 @@ name: Publish to Docker Hub
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
   # Publish master every Thursday at 7AM (schedule only applies to the master branch)
   schedule:
